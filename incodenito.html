@@ -1176,6 +1176,297 @@ body.light-mode .theme-toggle-wrap { color: rgba(80,80,80,0.70); }
   box-shadow:0 28px 70px rgba(0,0,0,0.50);
 }
 
+/* ═══ NEW: TEACHER MODE BADGE & MODAL ═══ */
+.teacher-badge {
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,#3a2f10,#2a2008);
+  border:1.5px solid rgba(245,158,11,0.45);border-radius:var(--r-pill);
+  padding:5px 12px;font-size:11px;font-weight:800;
+  color:#f0c060;cursor:pointer;transition:all .18s;
+  box-shadow:0 2px 8px rgba(245,158,11,0.15);
+}
+.teacher-badge:hover { box-shadow:0 4px 14px rgba(245,158,11,0.30);transform:translateY(-1px); }
+.teacher-modal-overlay {
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.70);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.teacher-modal-overlay.open { display:flex; }
+.teacher-modal {
+  background:linear-gradient(160deg,#464646,#2e2e2e);
+  border:1px solid rgba(255,255,255,0.09);border-radius:var(--r-xl);
+  padding:28px 24px;width:min(420px,92vw);
+  box-shadow:0 30px 70px rgba(0,0,0,0.55);
+  max-height:90vh;overflow-y:auto;
+}
+.teacher-modal-header { display:flex;align-items:center;gap:14px;margin-bottom:10px; }
+.teacher-modal-icon { font-size:32px; }
+.teacher-modal-title { font-size:var(--t-xl);font-weight:800;color:var(--text); }
+.teacher-modal-sub { font-size:12px;color:var(--muted);font-weight:500;margin-bottom:20px;line-height:1.5; }
+.teacher-pin-row { display:flex;gap:8px;margin-bottom:8px; }
+.teacher-pin-input {
+  flex:1;padding:11px 14px;
+  background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.18);
+  border-radius:var(--r);font-family:var(--mono);font-size:20px;letter-spacing:6px;
+  color:var(--text);outline:none;transition:border-color .2s;text-align:center;
+}
+.teacher-pin-input:focus { border-color:var(--orange); }
+.teacher-pin-btn {
+  padding:11px 20px;background:linear-gradient(135deg,#f59e0b,#d97706);
+  border:none;border-radius:var(--r);color:white;font-weight:800;font-size:13px;
+  cursor:pointer;transition:all .18s;white-space:nowrap;
+}
+.teacher-pin-btn:hover { background:linear-gradient(135deg,#fbbf24,#f59e0b); }
+.teacher-pin-error { font-size:12px;color:var(--red);font-weight:600;min-height:18px;margin-bottom:14px; }
+.teacher-unlocked { display:none; }
+.teacher-unlocked.visible { display:block; }
+.teacher-section-label {
+  font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.teacher-section-label::after { content:'';flex:1;height:1px;background:rgba(255,255,255,0.10);display:block; }
+.teacher-bulk-row { display:flex;gap:8px;margin-bottom:16px; }
+.teacher-bulk-row button { flex:1;padding:10px;font-size:12px;font-weight:800; }
+.teacher-unit-toggles { display:flex;flex-direction:column;gap:8px;margin-bottom:18px; }
+.teacher-unit-row {
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.09);
+  border-radius:var(--r);transition:all .2s;
+}
+.teacher-unit-row.completed { background:rgba(76,175,125,0.08);border-color:rgba(76,175,125,0.28); }
+.teacher-unit-icon { font-size:18px;flex-shrink:0; }
+.teacher-unit-name { flex:1;font-size:12px;font-weight:700;color:var(--text); }
+.teacher-unit-status { font-size:11px;font-weight:700;color:var(--muted);margin-right:6px; }
+.teacher-unit-status.done { color:var(--green); }
+.teacher-close-btn { width:100%;padding:12px;font-size:13px;font-weight:800;margin-top:6px; }
+/* toggle switch */
+.t-toggle { position:relative;width:44px;height:24px;flex-shrink:0; }
+.t-toggle input { opacity:0;width:0;height:0; }
+.t-slider {
+  position:absolute;inset:0;background:rgba(255,255,255,0.15);
+  border-radius:24px;cursor:pointer;transition:background .2s;
+}
+.t-slider::before {
+  content:'';position:absolute;width:18px;height:18px;
+  left:3px;top:3px;background:white;border-radius:50%;
+  transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,0.3);
+}
+.t-toggle input:checked + .t-slider { background:var(--green); }
+.t-toggle input:checked + .t-slider::before { transform:translateX(20px); }
+
+/* ═══ NEW: REPORT MODAL ═══ */
+.report-modal-overlay {
+  display:none;position:fixed;inset:0;z-index:9998;
+  background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.report-modal-overlay.open { display:flex; }
+.report-modal {
+  background:linear-gradient(160deg,#464646,#2e2e2e);
+  border:1px solid rgba(255,255,255,0.09);border-radius:var(--r-xl);
+  padding:28px 24px;width:min(480px,92vw);
+  box-shadow:0 20px 60px rgba(0,0,0,0.50);
+  max-height:92vh;overflow-y:auto;
+}
+.report-modal h3 { font-size:var(--t-lg);font-weight:800;color:var(--text);margin-bottom:4px; }
+.report-modal .report-sub { font-size:12px;color:var(--muted);margin-bottom:16px;font-weight:500; }
+.report-table { width:100%;border-collapse:collapse;margin-bottom:18px;font-size:12px; }
+.report-table th {
+  text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;
+  color:var(--muted);font-weight:700;padding:6px 8px;
+  border-bottom:1.5px solid rgba(255,255,255,0.12);
+}
+.report-table td { padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.06);color:var(--text-2);font-weight:600; }
+.report-table tr:last-child td { border-bottom:none; }
+.report-badge { display:inline-flex;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700; }
+.report-badge.done { background:rgba(76,175,125,0.18);color:#70d0a0; }
+.report-badge.prog { background:rgba(245,158,11,0.15);color:#f0c060; }
+.report-badge.lock { background:rgba(100,116,139,0.12);color:var(--muted); }
+.report-divider { height:1px;background:rgba(255,255,255,0.10);margin:14px 0; }
+.report-summary-row { display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px; }
+.report-summary-row span:last-child { color:var(--text);font-weight:700; }
+.report-email-input {
+  width:100%;padding:11px 14px;
+  background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.15);
+  border-radius:var(--r);font-family:var(--sans);font-size:13px;font-weight:600;
+  color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:6px;
+}
+.report-email-input:focus { border-color:var(--orange);box-shadow:0 0 0 3px rgba(240,112,32,0.15); }
+.report-email-input::placeholder { color:var(--muted); }
+.report-email-error { font-size:11px;color:var(--red);font-weight:600;min-height:16px;margin-bottom:10px; }
+
+/* ═══ NEW: SAVE POPUP ═══ */
+.save-popup-overlay {
+  display:none;position:fixed;inset:0;z-index:9997;
+  background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);
+  align-items:flex-end;justify-content:center;
+  padding-bottom:max(24px,calc(24px + env(safe-area-inset-bottom)));
+}
+.save-popup-overlay.open { display:flex; }
+.save-popup {
+  background:linear-gradient(160deg,#484848,#323232);
+  border:1px solid rgba(255,255,255,0.12);border-radius:var(--r-xl);
+  padding:28px 24px;width:min(400px,92vw);text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.50);
+}
+.save-popup-icon { font-size:44px;margin-bottom:10px; }
+.save-popup-title { font-size:var(--t-xl);font-weight:800;color:var(--text);margin-bottom:8px; }
+.save-popup-sub { font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6; }
+.save-popup-btns { display:flex;flex-direction:column;gap:9px; }
+.save-popup-btns button { width:100%;padding:13px;font-size:14px;font-weight:800; }
+
+/* ═══ NEW: SR DUE BUTTON & FREEZE BADGE ═══ */
+.sr-due-btn {
+  font-size:11px;font-weight:700;padding:4px 11px;
+  background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.40);
+  border-radius:999px;color:#f0c060;cursor:pointer;
+  transition:all .2s;display:inline-flex;align-items:center;gap:5px;
+}
+.sr-due-btn:hover { background:rgba(245,158,11,0.25); }
+.freeze-badge {
+  font-size:11px;font-weight:700;
+  background:rgba(147,197,253,0.10);border:1.5px solid rgba(147,197,253,0.30);
+  border-radius:999px;padding:2px 9px;color:#93c5fd;
+}
+/* SR review badge on question card */
+.sr-badge {
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.35);
+  border-radius:999px;padding:3px 10px;
+  font-size:10px;font-weight:700;color:#f0c060;
+  width:fit-content;margin-bottom:6px;
+  animation:srPulse 1.5s ease infinite;
+}
+@keyframes srPulse {
+  0%,100% { box-shadow:0 0 0 0 rgba(245,158,11,0.35); }
+  50%      { box-shadow:0 0 0 5px rgba(245,158,11,0); }
+}
+.smart-badge {
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(80,150,255,0.10);border:1.5px solid rgba(80,150,255,0.30);
+  border-radius:999px;padding:3px 10px;
+  font-size:10px;font-weight:700;color:#80b0ff;
+  width:fit-content;margin-bottom:6px;
+}
+
+/* ═══ NEW: GUIDE SEARCH ═══ */
+.guide-search-wrap { position:relative;padding:10px 14px 4px; }
+.guide-search {
+  width:100%;padding:11px 16px 11px 40px;
+  background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.14);
+  border-radius:var(--r-pill);font-size:13px;color:var(--text);
+  outline:none;font-family:var(--sans);font-weight:500;
+  transition:border-color .2s,box-shadow .2s;
+}
+.guide-search::placeholder { color:var(--muted); }
+.guide-search:focus { border-color:rgba(240,112,32,0.50);box-shadow:0 0 0 3px rgba(240,112,32,0.10); }
+.guide-search-icon { position:absolute;left:26px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none; }
+body.light-mode .guide-search { background:rgba(0,0,0,0.05);border-color:rgba(0,0,0,0.14);color:#1a1a1a; }
+body.light-mode .guide-search-icon { color:rgba(80,80,80,0.60); }
+
+/* ═══ NEW: LESSON PROGRESS BAR & SECTION TABS ═══ */
+.lesson-progress-bar { width:100%;height:3px;background:rgba(255,255,255,0.10);position:sticky;top:53px;z-index:9; }
+.lesson-progress-fill { height:100%;background:linear-gradient(90deg,var(--orange-d),var(--orange),var(--orange-l));transition:width .4s ease; }
+.lesson-unit-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px; }
+@media(min-width:480px) { .lesson-unit-grid { grid-template-columns:1fr 1fr 1fr; } }
+.lesson-unit-btn {
+  background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.10);
+  border-radius:var(--r);padding:12px 10px;
+  cursor:pointer;text-align:center;transition:all .2s;
+}
+.lesson-unit-btn:hover { border-color:var(--orange);transform:translateY(-2px); }
+.lesson-unit-btn.active { border-color:var(--orange);background:rgba(240,112,32,0.12); }
+.lesson-unit-btn .lub-icon { font-size:22px;margin-bottom:5px; }
+.lesson-unit-btn .lub-name { font-size:10px;font-weight:700;color:var(--text); }
+.lesson-section-tabs { display:flex;gap:6px;margin-bottom:14px; }
+.lesson-section-tab {
+  flex:1;padding:9px 6px;font-size:12px;font-weight:700;
+  border:1.5px solid rgba(255,255,255,0.12);border-radius:var(--r);
+  background:rgba(255,255,255,0.06);color:var(--muted);
+  cursor:pointer;font-family:var(--sans);transition:all .18s;
+}
+.lesson-section-tab.active { background:var(--orange);color:white;border-color:var(--orange);box-shadow:0 2px 10px rgba(240,112,32,0.35); }
+.lesson-section-tab:not(.active):hover { border-color:rgba(240,112,32,0.40);color:var(--orange-l);background:rgba(240,112,32,0.08); }
+
+/* ═══ NEW: EXAMPLE STEPPER ═══ */
+.example-card { padding:22px 20px 18px;display:flex;flex-direction:column;gap:14px;border-left:3px solid var(--orange); }
+.example-num { font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:var(--muted); }
+.example-q { font-size:14px;font-weight:700;color:var(--text);line-height:1.5;white-space:pre-wrap; }
+.example-steps { display:flex;flex-direction:column;gap:8px; }
+.example-step {
+  display:flex;gap:10px;align-items:flex-start;
+  padding:10px 12px;background:rgba(255,255,255,0.05);
+  border-radius:var(--r);border:1px solid rgba(255,255,255,0.08);
+  font-size:13px;color:var(--text-2);font-weight:500;line-height:1.55;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .3s ease,transform .3s ease;
+}
+.example-step.revealed { opacity:1;transform:translateY(0); }
+.example-step-num {
+  min-width:22px;height:22px;border-radius:50%;
+  background:var(--orange);color:white;
+  font-size:11px;font-weight:800;display:grid;place-items:center;
+  flex-shrink:0;margin-top:1px;
+}
+.example-answer {
+  padding:12px 14px;background:rgba(76,175,125,0.08);
+  border-radius:var(--r);border:1.5px solid rgba(76,175,125,0.28);
+  font-size:13px;font-weight:700;color:#70d0a0;display:none;
+}
+.example-answer.revealed { display:block; }
+.example-btn-row { display:flex;gap:8px; }
+.example-reveal-btn,.example-next-btn { flex:1;padding:11px;font-size:13px;font-weight:800; }
+
+/* ═══ NEW: IMPORT FEEDBACK ═══ */
+.import-feedback {
+  display:none;font-size:12px;font-weight:600;text-align:center;
+  padding:8px 12px;border-radius:var(--r);margin-bottom:8px;
+}
+
+/* ═══ NEW: ONBOARDING DOTS ═══ */
+.onb-dots { display:flex;justify-content:center;gap:7px;margin:14px 0 4px; }
+.onb-dot { width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.18);transition:all .3s; }
+.onb-dot.active { background:var(--orange);transform:scale(1.3); }
+
+/* ═══ NEW: FLIP TAG ═══ */
+.flip-tag {
+  display:inline-flex;align-items:center;padding:2px 10px;
+  border-radius:999px;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  background:rgba(240,112,32,0.15);border:1px solid rgba(240,112,32,0.30);color:var(--orange-l);
+  margin-top:8px;
+}
+
+/* light mode overrides for new elements */
+body.light-mode .teacher-badge { background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b;color:#92400e; }
+body.light-mode .teacher-modal, body.light-mode .report-modal, body.light-mode .save-popup {
+  background:linear-gradient(160deg,#ffffff,#f5f5f5);border-color:rgba(0,0,0,0.08);
+}
+body.light-mode .teacher-modal-title, body.light-mode .report-modal h3,
+body.light-mode .save-popup-title { color:#1a1a1a; }
+body.light-mode .teacher-modal-sub, body.light-mode .report-modal .report-sub,
+body.light-mode .save-popup-sub { color:rgba(60,60,60,0.65); }
+body.light-mode .teacher-unit-row { background:rgba(0,0,0,0.04);border-color:rgba(0,0,0,0.10); }
+body.light-mode .teacher-unit-row.completed { background:rgba(76,175,125,0.08);border-color:rgba(76,175,125,0.28); }
+body.light-mode .teacher-unit-name { color:#1a1a1a; }
+body.light-mode .teacher-pin-input { background:rgba(0,0,0,0.05);border-color:rgba(0,0,0,0.15);color:#1a1a1a; }
+body.light-mode .t-slider { background:rgba(0,0,0,0.15); }
+body.light-mode .report-table th { color:rgba(60,60,60,0.65);border-bottom-color:rgba(0,0,0,0.12); }
+body.light-mode .report-table td { color:#1a1a1a;border-bottom-color:rgba(0,0,0,0.06); }
+body.light-mode .report-divider { background:rgba(0,0,0,0.10); }
+body.light-mode .report-summary-row { color:rgba(60,60,60,0.65); }
+body.light-mode .report-summary-row span:last-child { color:#1a1a1a; }
+body.light-mode .report-email-input { background:rgba(0,0,0,0.05);border-color:rgba(0,0,0,0.14);color:#1a1a1a; }
+body.light-mode .sr-due-btn { background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.35);color:#92400e; }
+body.light-mode .freeze-badge { background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.25);color:#1d4ed8; }
+body.light-mode .lesson-unit-btn { background:rgba(0,0,0,0.04);border-color:rgba(0,0,0,0.10); }
+body.light-mode .lesson-unit-btn.active { background:rgba(240,112,32,0.10);border-color:var(--orange); }
+body.light-mode .lesson-unit-btn .lub-name { color:#1a1a1a; }
+body.light-mode .lesson-section-tab { background:rgba(0,0,0,0.05);border-color:rgba(0,0,0,0.12);color:rgba(60,60,60,0.65); }
+body.light-mode .example-step { background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07);color:#334155; }
+body.light-mode .onb-dot { background:rgba(0,0,0,0.14); }
+body.light-mode .flip-tag { background:rgba(240,112,32,0.12);border-color:rgba(240,112,32,0.28);color:var(--orange); }
+
 /* ═══ FEATURE: TEACHER REPORT ═══ */
 #reportScreen { align-items:center; padding:16px 16px 80px; }
 .report-body { width:100%;max-width:560px;display:flex;flex-direction:column;gap:14px; }
@@ -1629,7 +1920,11 @@ body.light-mode .theme-toggle-wrap { color: rgba(80,80,80,0.70); }
   <div class="goal-bar-wrap" id="goalBarWrap" onclick="openGoalModal()" title="Set daily goal">
     <div class="goal-bar-top">
       <span class="goal-bar-label">🎯 Daily Goal</span>
-      <span class="goal-bar-val" id="goalBarVal">0 / 10 questions</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="freeze-badge" id="freezeBadge">❄️ 1</span>
+        <button class="sr-due-btn" id="srDueBtn" onclick="openReviewSession()" style="display:none;">🔄 Reviews due: <span id="srDueBadge">0</span></button>
+        <span class="goal-bar-val" id="goalBarVal">0 / 10 questions</span>
+      </div>
     </div>
     <div class="goal-track"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
   </div>
@@ -1637,18 +1932,20 @@ body.light-mode .theme-toggle-wrap { color: rgba(80,80,80,0.70); }
   <div style="display:flex;gap:7px;flex-wrap:wrap;width:100%;max-width:560px;margin-bottom:14px;">
     <button class="btn home-nav-btn" id="dashBtn">📊 Dashboard</button>
     <button class="btn home-nav-btn" id="bmHomeBtn">⭐ Bookmarks <span id="bmHomeBadge" style="display:none;background:var(--orange);color:white;border-radius:999px;padding:1px 6px;font-size:10px;margin-left:2px;">0</span></button>
+    <button class="btn home-nav-btn" id="mjHomeBtn">📕 Mistakes <span id="mjHomeBadge" style="display:none;background:#e05a5a;color:white;border-radius:999px;padding:1px 6px;font-size:10px;margin-left:2px;">0</span></button>
     <button class="btn home-nav-btn" id="frHomeBtn">✏️ Fill-in-Blank</button>
     <button class="btn home-nav-btn" id="codeLabBtn">⌨️ Code Lab</button>
     <button class="btn home-nav-btn" id="examBtn">📝 Exam Simulator</button>
     <button class="btn home-nav-btn" id="lessonBtn">📖 Lesson Path</button>
     <button class="btn home-nav-btn" id="reportBtn">📋 Teacher Report</button>
+    <button class="teacher-badge" id="teacherModeBtn" onclick="openTeacherModal()">🎓 Teacher Mode</button>
     <button class="btn home-nav-btn" style="background:rgba(192,48,48,0.25);border-color:rgba(224,90,90,0.35);color:#f09090;" id="resetBtn">🔄 Reset</button>
   </div>
   <div class="course-banner t-card" style="max-width:560px;width:100%;">
     <div class="banner-icon">🎓</div>
     <div>
       <div class="banner-title">Professional Developer Track</div>
-      <div class="banner-sub">// Java · C# · HTML/CSS/JS · SQL · OOP · Agile/Scrum</div>
+      <div class="banner-sub" id="bannerSub">// Java · C# · HTML/CSS/JS · SQL · OOP · Agile/Scrum</div>
     </div>
   </div>
 
@@ -1691,6 +1988,8 @@ body.light-mode .theme-toggle-wrap { color: rgba(80,80,80,0.70); }
     <div class="unit-chip" id="unitChip">Unit</div>
 
     <div class="t-card question-card" id="questionCard">
+      <div id="srBadge"    class="sr-badge"    style="display:none;">🔄 Review — Try Again!</div>
+      <div id="smartBadge" class="smart-badge" style="display:none;">🧠 Weak spot — extra practice</div>
       <div class="q-meta">
         <div class="q-label">Q&thinsp;<span id="qNum">1</span>&thinsp;/&thinsp;<span id="qTot">8</span></div>
         <div id="qType" class="tag concept">CONCEPT</div>
@@ -1774,6 +2073,7 @@ body.light-mode .theme-toggle-wrap { color: rgba(80,80,80,0.70); }
         <div class="flip-front">
           <div class="flip-hint">tap to reveal definition</div>
           <div class="flip-term" id="flipTerm">Term</div>
+          <div class="flip-tag"  id="flipTag">CORE</div>
         </div>
         <div class="flip-back">
           <div class="flip-hint">definition</div>
@@ -1808,7 +2108,74 @@ body.light-mode .theme-toggle-wrap { color: rgba(80,80,80,0.70); }
     <span class="onb-icon" id="onbIcon"><img src="data:image/png;base64,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" style="width:clamp(50px,12vw,70px);height:clamp(50px,12vw,70px);object-fit:contain;display:inline-block;" alt="Incodenito"/></span>
     <div class="onb-title" id="onbTitle">Welcome, Developer</div>
     <div class="onb-body"  id="onbBody">Ready to learn professional coding from the ground up? You'll master Java, C#, web tech, SQL, OOP, and Agile.</div>
+    <div class="onb-dots"  id="onbDots"></div>
     <button class="btn onb-cta" id="onbCTA" onclick="advanceOnboard()">Let's begin →</button>
+  </div>
+</div>
+
+<!-- ═══ TEACHER MODE MODAL ═══ -->
+<div class="teacher-modal-overlay" id="teacherModal">
+  <div class="teacher-modal">
+    <div class="teacher-modal-header">
+      <div class="teacher-modal-icon">🎓</div>
+      <div>
+        <div class="teacher-modal-title">Teacher Mode</div>
+      </div>
+    </div>
+    <div class="teacher-modal-sub">Enter the PIN to access teacher controls. Students do not have this PIN.</div>
+    <div class="teacher-pin-row">
+      <input class="teacher-pin-input" id="teacherPinInput" type="password" maxlength="4" placeholder="••••" inputmode="numeric"/>
+      <button class="teacher-pin-btn" onclick="checkTeacherPin()">Unlock</button>
+    </div>
+    <div class="teacher-pin-error" id="teacherPinError"></div>
+    <div class="teacher-unlocked" id="teacherUnlocked">
+      <div class="teacher-section-label">Unit Completion Overrides</div>
+      <div class="teacher-bulk-row">
+        <button class="btn green-btn" onclick="teacherCompleteAll()" style="font-size:12px;">✓ Complete All</button>
+        <button class="btn ghost"     onclick="teacherResetAll()"    style="font-size:12px;">↺ Reset All</button>
+      </div>
+      <div class="teacher-unit-toggles" id="teacherUnitToggles"></div>
+      <button class="btn ghost teacher-close-btn" onclick="closeTeacherModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ REPORT MODAL ═══ -->
+<div class="report-modal-overlay" id="reportModal">
+  <div class="report-modal">
+    <h3>📋 Progress Report</h3>
+    <div class="report-sub" id="reportSubtitle">Student progress summary</div>
+    <div class="report-divider"></div>
+    <div id="reportSummaryRows"></div>
+    <div class="report-divider"></div>
+    <table class="report-table">
+      <thead><tr><th>Unit</th><th>Status</th><th>Accuracy</th><th>Progress</th></tr></thead>
+      <tbody id="reportTableBody"></tbody>
+    </table>
+    <div class="report-divider"></div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;font-family:var(--mono);">Teacher's Email Address</div>
+      <input class="report-email-input" id="teacherEmailInput" type="email" placeholder="e.g. teacher@school.edu"/>
+      <div class="report-email-error" id="emailError"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="btn" onclick="sendReportEmail()" style="width:100%;padding:12px;font-size:13px;font-weight:800;">✉️ Email to Teacher</button>
+      <button class="btn ghost" onclick="downloadReport()" style="width:100%;padding:12px;font-size:13px;font-weight:800;">⬇️ Download Report (.txt)</button>
+      <button class="btn ghost" onclick="closeReportModal()" style="width:100%;padding:12px;font-size:13px;font-weight:800;">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ UNIT COMPLETE SAVE POPUP ═══ -->
+<div class="save-popup-overlay" id="savePopupOverlay">
+  <div class="save-popup">
+    <div class="save-popup-icon" id="savePopupIcon">🎉</div>
+    <div class="save-popup-title" id="savePopupTitle">Unit Complete!</div>
+    <div class="save-popup-sub" id="savePopupSub">Great work! Your progress has been saved.</div>
+    <div class="save-popup-btns">
+      <button class="btn" onclick="saveFromPopup()">💾 Save Progress</button>
+      <button class="btn ghost" onclick="closeSavePopup()">Continue without saving</button>
+    </div>
   </div>
 </div>
 
@@ -2361,11 +2728,22 @@ const ONBOARD_STEPS = [
   {icon:'🏃', title:'How It Works', body:'Answer 8 questions per unit. Get 60%+ to unlock the next. Earn XP, track mistakes, and review flashcards. Let\'s code!'},
 ];
 
+function showOnboardDots() {
+  const dots = $('onbDots');
+  if (!dots) return;
+  dots.innerHTML = ONBOARD_STEPS.map((_, i) =>
+    `<div class="onb-dot${i === onbStep ? ' active' : ''}"></div>`
+  ).join('');
+}
+
 function advanceOnboard() {
   onbStep++;
   if (onbStep >= ONBOARD_STEPS.length) {
+    try { localStorage.setItem('inc_onboarded_v1', '1'); } catch(e) {}
     showScreen('homeScreen');
     renderHome();
+    // Open goal modal after onboarding
+    setTimeout(() => { if ($('goalModalOverlay')) openGoalModal(); }, 400);
     return;
   }
   const s = ONBOARD_STEPS[onbStep];
@@ -2374,6 +2752,7 @@ function advanceOnboard() {
   $('onbBody').textContent = s.body;
   $('onbBar').style.width = ((onbStep + 1) / ONBOARD_STEPS.length * 100) + '%';
   $('onbCTA').textContent = onbStep === ONBOARD_STEPS.length - 1 ? 'Start Learning →' : 'Next →';
+  showOnboardDots();
 }
 
 let previousScreen = 'homeScreen';
@@ -2395,6 +2774,13 @@ function renderHome() {
   $('h-xp').textContent = totalXP;
   $('h-streak').textContent = globalStreak;
   $('h-done').textContent = completedUnits.size;
+
+  // Dynamic banner sub-line
+  const bannerSub = $('bannerSub');
+  if (bannerSub) {
+    const totalQs = UNITS.reduce((s, u) => s + u.questions.length, 0);
+    bannerSub.innerHTML = UNITS.length + ' UNITS &nbsp;&middot;&nbsp; ' + totalQs + ' QUESTIONS &nbsp;&middot;&nbsp; Professional Developer Track';
+  }
 
   const list = $('unitsList');
   list.innerHTML = '';
@@ -2431,6 +2817,14 @@ function renderHome() {
     if (!locked) card.addEventListener('click', () => startUnit(i));
     list.appendChild(card);
   });
+
+  // Update SR due badge
+  if (typeof updateDueBadge === 'function') updateDueBadge();
+  // Update freeze badge
+  if (typeof streakFreezes !== 'undefined') {
+    const fb = $('freezeBadge');
+    if (fb) fb.textContent = '❄️ ' + streakFreezes;
+  }
 }
 
 $('startBtn').addEventListener('click', () => startUnit(Math.min(unlockedUnits - 1, UNITS.length - 1)));
@@ -2493,6 +2887,12 @@ function loadQ() {
   const q = sesQs[curQ];
   $('qNum').textContent = curQ + 1;
   $('progFill').style.width = (curQ / sesQs.length * 100) + '%';
+
+  // SR / smart shuffle badges
+  const srBadge    = $('srBadge');
+  const smartBadge = $('smartBadge');
+  if (srBadge)    srBadge.style.display    = srMode ? 'inline-flex' : 'none';
+  if (smartBadge) smartBadge.style.display = 'none'; // shown by smart shuffle logic if needed
 
   // type tag
   const typeEl = $('qType');
@@ -2843,12 +3243,34 @@ function buildConceptMapSVG(cm) {
   return `<svg class="cmap-svg" width="${cm.width}" height="${cm.height}" viewBox="0 0 ${cm.width} ${cm.height}">${lines}${rects}</svg>`;
 }
 
+let guideSearch = '';
+
 function renderGuideContent() {
   const u = UNITS[guideUnitIdx];
   const content = $('guideContent');
-  const terms = GLOSSARY.filter(g => g.unit === guideUnitIdx);
+  const query = guideSearch.trim().toLowerCase();
+  const terms = GLOSSARY.filter(g => {
+    if (guideSearch === '') return g.unit === guideUnitIdx;
+    return g.term.toLowerCase().includes(query) || g.def.toLowerCase().includes(query);
+  });
+
+  // Inject search bar once if not present
+  if (!$('guideSearchInput')) {
+    const sw = document.createElement('div');
+    sw.className = 'guide-search-wrap';
+    sw.innerHTML = `<span class="guide-search-icon">🔍</span>
+      <input class="guide-search" id="guideSearchInput" type="text" placeholder="Search terms…" value="${guideSearch}">`;
+    const tabs = $('guideTabs');
+    if (tabs && tabs.parentNode) tabs.parentNode.insertBefore(sw, tabs.nextSibling);
+    const inp = $('guideSearchInput');
+    if (inp) inp.addEventListener('input', e => { guideSearch = e.target.value; renderGuideContent(); });
+  } else {
+    const inp = $('guideSearchInput');
+    if (inp && document.activeElement !== inp) inp.value = guideSearch;
+  }
+
   const cm = CONCEPT_MAPS[guideUnitIdx];
-  const mapHTML = cm ? `
+  const mapHTML = (cm && !query) ? `
     <div class="guide-section">
       <div class="guide-section-title">// CONCEPT MAP</div>
       <div class="t-card" style="padding:16px 12px;">
@@ -2856,9 +3278,11 @@ function renderGuideContent() {
         <div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:8px;">// how the concepts in this unit connect</div>
       </div>
     </div>` : '';
+  const noResults = terms.length === 0 ? `<div style="font-family:var(--mono);font-size:13px;color:var(--muted);padding:24px;text-align:center;">No terms match "${guideSearch}"</div>` : '';
   content.innerHTML = mapHTML + `
     <div class="guide-section">
-      <div class="guide-section-title">// KEY TERMS &amp; CONCEPTS</div>
+      <div class="guide-section-title">${query ? `// SEARCH RESULTS (${terms.length})` : '// KEY TERMS &amp; CONCEPTS'}</div>
+      ${noResults}
       ${terms.map(g => `
         <div class="t-card guide-item">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
@@ -2870,6 +3294,7 @@ function renderGuideContent() {
           ${g.ex ? `<div class="guide-ex">▶ ${g.ex}</div>` : ''}
         </div>`).join('')}
     </div>
+    ${!query ? `
     <div class="guide-section">
       <div class="guide-section-title">// HINTS FROM THIS UNIT</div>
       ${u.hints.map(h => `
@@ -2878,6 +3303,7 @@ function renderGuideContent() {
         </div>`).join('')}
     </div>
     <button class="btn ghost" style="margin-top:8px;" onclick="openFlashcards(${guideUnitIdx})">🃏 Drill Flashcards for this Unit</button>
+    ` : ''}
   `;
 }
 
@@ -2949,6 +3375,9 @@ function renderFlashCard() {
   $('flipDef').textContent  = t.def;
   $('flipEx').textContent   = t.ex ? '▶ ' + t.ex : '';
   $('flipEx').style.display = t.ex ? 'block' : 'none';
+  // Set category tag
+  const tag = $('flipTag');
+  if (tag) { tag.textContent = t.tag || 'CORE'; }
   flashFlipped = false;
   const card = $('flipCard');
   card.classList.remove('flipped');
@@ -3012,6 +3441,12 @@ function openMistakeJournal() {
 function updateMjBadge() {
   const badge = $('mjCount');
   if (badge) badge.textContent = mistakeJournal.length;
+  // Also update home screen badge
+  const homeBadge = $('mjHomeBadge');
+  if (homeBadge) {
+    homeBadge.textContent = mistakeJournal.length;
+    homeBadge.style.display = mistakeJournal.length > 0 ? 'inline-block' : 'none';
+  }
 }
 
 $('mjCloseBtn').addEventListener('click', () => { renderHome(); showScreen('homeScreen'); });
@@ -5019,6 +5454,9 @@ function collectState() {
     confidenceData: { ...confidenceData },
     currentDifficulty,
     bookmarks:      [...bookmarks],
+    streakFreezes,
+    lastPlayDate,
+    studentName,
   };
 }
 
@@ -5036,6 +5474,8 @@ function applyState(s) {
     confidenceData    = s.confidenceData || {};
     currentDifficulty = s.currentDifficulty || 'beginner';
     bookmarks         = new Set(s.bookmarks || []);
+    streakFreezes     = typeof s.streakFreezes === 'number' ? s.streakFreezes : 1;
+    lastPlayDate      = s.lastPlayDate || null;
     return true;
   } catch(e) {
     console.warn('Incodenito: state restore failed', e);
@@ -5149,6 +5589,11 @@ const _origEndSession = endSession;
 endSession = function() {
   _origEndSession();
   autoSave();
+  // Show save popup after unit completion
+  if (curUnit) {
+    const passed = sesCorrect / Math.max(sesQs.length, 1) >= 0.6;
+    setTimeout(() => showSavePopup(curUnit.name || 'this unit', passed), 1200);
+  }
 };
 
 // ── Add backup/restore UI to home screen ───────
@@ -5242,7 +5687,6 @@ if (_savedActive) {
   });
 } else {
   // No active student — show login
-  // Pre-populate profile list if any exist
   setTimeout(() => { loadExistingProfiles(); }, 60);
   showScreen('loginScreen');
 }
@@ -5250,6 +5694,9 @@ if (_savedActive) {
 // Inject backup bar and new features after initial render
 setTimeout(injectBackupUI, 50);
 setTimeout(initNewFeatures, 80);
+
+// Init onboarding dots on first load
+setTimeout(showOnboardDots, 100);
 
 }); // end DOMContentLoaded
 
@@ -5360,6 +5807,8 @@ function saveProfileState() {
 // ══ FEATURE 2: DAILY GOAL BAR ══════════════════
 let dailyGoal = 10;
 let dailyQuestionsAnswered = 0;
+let lastPlayDate = null;   // 'YYYY-MM-DD'
+let streakFreezes = 1;
 const GOAL_KEY = 'inc_daily_goal';
 const DAILY_DATE_KEY = 'inc_daily_date';
 const DAILY_COUNT_KEY = 'inc_daily_count';
@@ -5368,9 +5817,27 @@ const GOAL_OPTIONS = [5, 10, 15, 20, 30];
 function loadDailyGoal() {
   try {
     dailyGoal = parseInt(localStorage.getItem(GOAL_KEY) || '10', 10);
-    const today = new Date().toDateString();
+    streakFreezes = parseInt(localStorage.getItem('inc_streak_freezes') || '1', 10);
+    lastPlayDate  = localStorage.getItem('inc_last_play_date') || null;
+    const today = todayStr();
     const savedDate = localStorage.getItem(DAILY_DATE_KEY);
     if (savedDate !== today) {
+      // Check if we missed a day — apply freeze if needed
+      if (lastPlayDate && lastPlayDate !== today) {
+        const last = new Date(lastPlayDate);
+        const now  = new Date(today);
+        const diff = Math.round((now - last) / 86400000);
+        if (diff > 1) {
+          // Missed day(s)
+          if (streakFreezes > 0) {
+            streakFreezes--;
+            try { localStorage.setItem('inc_streak_freezes', String(streakFreezes)); } catch(e) {}
+            setTimeout(() => showToast('❄️ Streak freeze used! ' + streakFreezes + ' remaining.', 'info', 4000), 800);
+          } else {
+            globalStreak = 0;
+          }
+        }
+      }
       dailyQuestionsAnswered = 0;
       localStorage.setItem(DAILY_DATE_KEY, today);
       localStorage.setItem(DAILY_COUNT_KEY, '0');
@@ -5381,10 +5848,27 @@ function loadDailyGoal() {
 }
 
 function saveDailyProgress() {
+  const today = todayStr();
+  // Update streak on first question of a new day
+  if (lastPlayDate !== today) {
+    if (lastPlayDate) {
+      const diff = Math.round((new Date(today) - new Date(lastPlayDate)) / 86400000);
+      if (diff === 1) globalStreak++;
+      else if (diff > 1 && streakFreezes <= 0) globalStreak = 0; // freeze already handled in loadDailyGoal
+    } else {
+      globalStreak = Math.max(globalStreak, 1);
+    }
+    lastPlayDate = today;
+    try { localStorage.setItem('inc_last_play_date', today); } catch(e) {}
+  }
   try {
     localStorage.setItem(DAILY_COUNT_KEY, String(dailyQuestionsAnswered));
-    localStorage.setItem(DAILY_DATE_KEY, new Date().toDateString());
+    localStorage.setItem(DAILY_DATE_KEY, today);
+    localStorage.setItem('inc_streak_freezes', String(streakFreezes));
   } catch(e) {}
+  // Update freeze badge
+  const fb = $('freezeBadge');
+  if (fb) fb.textContent = '❄️ ' + streakFreezes;
 }
 
 function updateGoalBar() {
@@ -5453,23 +5937,33 @@ function saveSRSchedule() {
   try { localStorage.setItem(SR_KEY, JSON.stringify(srSchedule)); } catch(e) {}
 }
 function updateSRAfterAnswer(unitIdx, qIdx, correct) {
-  const key = `${unitIdx}_${qIdx}`;
-  const now = Date.now();
-  let rec = srSchedule[key] || { interval: 1, ease: 2.5, nextDue: now };
+  // Use text-based key matching getDueReviews() format
+  const q = UNITS[unitIdx] && UNITS[unitIdx].questions[qIdx];
+  const key = q ? `sr::${unitIdx}::${(q.t||'').slice(0,50)}` : `${unitIdx}_${qIdx}`;
+  const SR_INTERVALS = [1, 3, 7, 21]; // days
+  let rec = srSchedule[key] || { interval: 0, reps: 0 };
   if (correct) {
-    rec.interval = Math.round(rec.interval * rec.ease);
-    rec.ease = Math.max(1.3, rec.ease + 0.1);
+    const nextIdx = Math.min(rec.reps + 1, SR_INTERVALS.length - 1);
+    rec.interval = SR_INTERVALS[nextIdx];
+    rec.reps = nextIdx;
   } else {
-    rec.interval = 1;
-    rec.ease = Math.max(1.3, rec.ease - 0.2);
+    rec.interval = SR_INTERVALS[0];
+    rec.reps = 0;
   }
-  rec.nextDue = now + rec.interval * 24 * 3600 * 1000;
+  const due = new Date();
+  due.setDate(due.getDate() + rec.interval);
+  rec.dueDate = due.toISOString().slice(0, 10);
+  // Also keep nextDue for backward compat
+  rec.nextDue = due.getTime();
   srSchedule[key] = rec;
   saveSRSchedule();
+  // Update due badge after scheduling
+  if (typeof updateDueBadge === 'function') updateDueBadge();
 }
+
 function getDueSRCount() {
-  const now = Date.now();
-  return Object.values(srSchedule).filter(r => r.nextDue <= now).length;
+  const today = todayStr();
+  return Object.values(srSchedule).filter(r => (r.dueDate && r.dueDate <= today) || (r.nextDue && r.nextDue <= Date.now())).length;
 }
 loadSRSchedule();
 
@@ -5607,6 +6101,35 @@ function endExam() {
     <div class="t-card" style="padding:12px;text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--orange);">${acc}%</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">Accuracy</div></div>
     <div class="t-card" style="padding:12px;text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--orange);">${correct}</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">Correct</div></div>
     <div class="t-card" style="padding:12px;text-align:center;"><div style="font-size:18px;font-weight:800;color:var(--orange);">+${xpGain}</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);">XP Earned</div></div>`;
+
+  // Per-unit breakdown
+  const unitScores = {};
+  examQs.forEach((q, i) => {
+    const ui = q._unitIdx;
+    if (!unitScores[ui]) unitScores[ui] = { correct: 0, total: 0, name: q._unitName, icon: q._unitIcon };
+    unitScores[ui].total++;
+    if (examAnswers[i]) unitScores[ui].correct++;
+  });
+  const unitScoresEl = $('examUnitScores');
+  if (unitScoresEl && Object.keys(unitScores).length) {
+    unitScoresEl.innerHTML = `
+      <div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-weight:700;margin-bottom:10px;">Score by Unit</div>
+      ${Object.entries(unitScores).map(([ui, s]) => {
+        const pct = Math.round(s.correct / s.total * 100);
+        const col = pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--orange-l)' : 'var(--red)';
+        return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <span style="font-size:16px;flex-shrink:0;">${s.icon}</span>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:11px;font-weight:700;color:var(--text-2);margin-bottom:3px;">${s.name}</div>
+            <div style="height:5px;background:rgba(255,255,255,0.10);border-radius:999px;overflow:hidden;">
+              <div style="height:100%;width:${pct}%;background:${col};border-radius:999px;transition:width .5s;"></div>
+            </div>
+          </div>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:${col};flex-shrink:0;">${pct}%</span>
+        </div>`;
+      }).join('')}`;
+  }
+
   if (passed) launchConfetti();
   showToast(passed ? `Exam passed! +${xpGain} XP 🎓` : 'Practice more and try again!', passed ? 'success' : 'info');
   autoSave();
@@ -5619,58 +6142,225 @@ document.addEventListener('DOMContentLoaded', () => {
 // ══ FEATURE 6: ONBOARDING (enhanced multi-step) — already exists, just wire ══
 // Original onboard is already there; keep it as-is
 
-// ══ FEATURE 7: LESSON PATH (slideshow per unit) ════════
-const LESSON_SLIDES = UNITS.map((u, ui) => {
-  const terms = GLOSSARY.filter(g => g.unit === ui).slice(0, 4);
+// ══ FEATURE 7: LESSON PATH — full CD-style with unit grid, section tabs, example stepper ════════
+// Build lesson data from UNITS, GLOSSARY, WORKED_EXAMPLES
+const LESSONS = UNITS.map((u, ui) => {
+  const terms = GLOSSARY.filter(g => g.unit === ui);
   const we = WORKED_EXAMPLES[ui];
   const slides = [
-    { title: `Unit ${ui+1}: ${u.name}`, body: `Welcome to <strong>${u.name}</strong>! You'll cover: ${u.lessons}. This unit has ${u.questions.length} practice questions.`, tip: u.hints[0] },
-    we ? { title: we.title, body: we.concept, code: we.code, tip: we.callout.replace(/<[^>]+>/g,'') } : null,
-    ...terms.map(t => ({ title: t.term, body: t.def, tip: t.ex ? `Example: ${t.ex}` : null })),
-    { title: 'Ready to Practice!', body: `You've covered the key concepts for <strong>${u.name}</strong>. Now apply your knowledge in the quiz!`, tip: u.hints[u.hints.length-1] }
+    { icon: u.icon, heading: `Unit ${ui+1}: ${u.name}`, body: `Welcome to <strong>${u.name}</strong>! You'll cover: ${u.lessons}. This unit has ${u.questions.length} practice questions.<br><br>💡 ${u.hints[0]}` },
+    we ? { icon: '📋', heading: we.title, body: we.concept + (we.callout ? `<br><br><strong>Key insight:</strong> ${we.callout.replace(/<[^>]+>/g,'')}` : '') } : null,
+    ...terms.slice(0, 5).map(t => ({
+      icon: '📖',
+      heading: t.term,
+      body: t.def + (t.ex ? `<br><br><em>Example:</em> ${t.ex}` : '')
+    })),
+    { icon: '🚀', heading: 'Ready to Practice!', body: `You've covered the key concepts for <strong>${u.name}</strong>. Now apply your knowledge — hit Start Quiz to test yourself!<br><br>💡 ${u.hints[u.hints.length-1]}` }
   ].filter(Boolean);
-  return slides;
+
+  const examples = we ? [{
+    q: we.title + '\n' + (we.concept ? we.concept.replace(/<[^>]+>/g,'').slice(0,200) : ''),
+    steps: (we.steps || u.hints.slice(0,3).map((h,i) => `Step ${i+1}: ${h}`)),
+    answer: we.callout ? we.callout.replace(/<[^>]+>/g,'') : 'See the Study Guide for the full explanation.'
+  }] : [{
+    q: `What are the key concepts in ${u.name}?`,
+    steps: u.hints.slice(0, 3).map((h, i) => `Step ${i+1}: ${h}`),
+    answer: `Review the Study Guide for ${u.name} for full explanations.`
+  }];
+
+  return { slides, examples };
 });
 
-let lessonUnitIdx = 0, lessonSlideIdx = 0;
+let lessonUnitIdx = 0;
+let lessonSection = 'lesson';
+let lessonSlideIdx = 0;
+let lessonExIdx = 0;
+let lessonStepsShown = 0;
+let lessonSeenSlides = new Set([0]);
 
 function openLessonPath(unitIdx) {
-  lessonUnitIdx = unitIdx !== undefined ? unitIdx : (curUnit ? UNITS.indexOf(curUnit) : 0);
-  lessonSlideIdx = 0;
-  renderLessonSlide();
+  lessonUnitIdx   = unitIdx !== undefined ? unitIdx : (curUnit ? UNITS.indexOf(curUnit) : 0);
+  lessonSection   = 'lesson';
+  lessonSlideIdx  = 0;
+  lessonExIdx     = 0;
+  lessonStepsShown = 0;
+  lessonSeenSlides = new Set([0]);
+  renderLessonScreen();
   showScreen('lessonScreen');
 }
 
-function renderLessonSlide() {
-  const slides = LESSON_SLIDES[lessonUnitIdx] || [];
-  const slide = slides[lessonSlideIdx];
-  const u = UNITS[lessonUnitIdx];
-  if (!slide) return;
-  $('lessonTopTitle').innerHTML = `📖 ${u.icon} <span>${u.name}</span>`;
-  $('lessonCounter').textContent = `${lessonSlideIdx + 1} / ${slides.length}`;
+function renderLessonScreen() {
   const body = $('lessonBody');
-  body.innerHTML = `
-    <div class="lesson-slide">
-      <div class="lesson-slide-num">Slide ${lessonSlideIdx + 1} of ${slides.length}</div>
-      <div class="lesson-slide-title">${slide.title}</div>
-      <div class="lesson-slide-body">${slide.body || ''}</div>
-      ${slide.code ? `<div class="lesson-slide-code">${slide.code}</div>` : ''}
-      ${slide.tip ? `<div class="lesson-slide-tip">💡 ${slide.tip}</div>` : ''}
-    </div>
-    <div class="lesson-dots">
-      ${slides.map((_,i) => `<div class="lesson-dot${i===lessonSlideIdx?' active':i<lessonSlideIdx?' done':''}" onclick="goToLessonSlide(${i})"></div>`).join('')}
-    </div>
-    <div class="lesson-nav">
-      <button class="btn ghost" style="flex:1;" onclick="lessonPrev()" ${lessonSlideIdx===0?'disabled':''}>← Prev</button>
-      ${lessonSlideIdx < slides.length - 1
-        ? `<button class="btn" style="flex:1;" onclick="lessonNext()">Next →</button>`
-        : `<button class="btn green-btn" style="flex:1;" onclick="startUnit(${lessonUnitIdx});showToast('Lesson complete! Starting quiz…','success');">Start Quiz ▶</button>`}
-    </div>`;
+  const unit = UNITS[lessonUnitIdx];
+  const les  = LESSONS[lessonUnitIdx];
+  if (!body || !unit || !les) return;
+
+  $('lessonTopTitle').innerHTML = `📖 ${unit.icon} <span>${unit.name}</span>`;
+  const topSub = $('lessonTopSub');
+  if (topSub) topSub.textContent = lessonSection === 'lesson'
+    ? `Lesson — Slide ${lessonSlideIdx + 1} of ${les.slides.length}`
+    : `Guided Examples — ${lessonExIdx + 1} of ${les.examples.length}`;
+
+  const totalSteps = les.slides.length + les.examples.length;
+  const doneSteps  = lessonSection === 'lesson' ? lessonSlideIdx : les.slides.length + lessonExIdx;
+  const pf = $('lessonProgressFill');
+  if (pf) pf.style.width = Math.round(doneSteps / totalSteps * 100) + '%';
+
+  body.innerHTML = '';
+
+  // Unit selector
+  const pickLabel = document.createElement('div');
+  pickLabel.style.cssText = 'font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700;margin-bottom:6px;font-family:var(--mono);';
+  pickLabel.textContent = 'Select Unit';
+  body.appendChild(pickLabel);
+
+  const grid = document.createElement('div');
+  grid.className = 'lesson-unit-grid';
+  UNITS.forEach((u, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'lesson-unit-btn' + (i === lessonUnitIdx ? ' active' : '');
+    btn.innerHTML = `<div class="lub-icon">${u.icon}</div><div class="lub-name">Unit ${i+1}</div>`;
+    btn.addEventListener('click', () => {
+      lessonUnitIdx = i; lessonSection = 'lesson';
+      lessonSlideIdx = 0; lessonExIdx = 0; lessonStepsShown = 0;
+      lessonSeenSlides = new Set([0]);
+      renderLessonScreen();
+    });
+    grid.appendChild(btn);
+  });
+  body.appendChild(grid);
+
+  // Section tabs
+  const tabs = document.createElement('div');
+  tabs.className = 'lesson-section-tabs';
+  ['lesson','examples'].forEach(sec => {
+    const tab = document.createElement('button');
+    tab.className = 'lesson-section-tab' + (lessonSection === sec ? ' active' : '');
+    tab.textContent = sec === 'lesson'
+      ? `📖 Lesson (${les.slides.length} slides)`
+      : `🧩 Examples (${les.examples.length})`;
+    tab.addEventListener('click', () => {
+      if (lessonSection === sec) return;
+      lessonSection = sec; lessonSlideIdx = 0; lessonExIdx = 0;
+      lessonStepsShown = 0; lessonSeenSlides = new Set([0]);
+      renderLessonScreen();
+    });
+    tabs.appendChild(tab);
+  });
+  body.appendChild(tabs);
+
+  if (lessonSection === 'lesson') renderLessonSlideSection(body, les);
+  else renderLessonExample(body, les);
 }
 
-function lessonNext() { lessonSlideIdx++; renderLessonSlide(); }
-function lessonPrev() { if (lessonSlideIdx > 0) { lessonSlideIdx--; renderLessonSlide(); } }
-function goToLessonSlide(i) { lessonSlideIdx = i; renderLessonSlide(); }
+function renderLessonSlideSection(body, les) {
+  const slide = les.slides[lessonSlideIdx];
+  const dots = document.createElement('div');
+  dots.className = 'lesson-dots';
+  les.slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'lesson-dot' + (i === lessonSlideIdx ? ' active' : lessonSeenSlides.has(i) ? ' seen' : '');
+    d.addEventListener('click', () => { lessonSlideIdx = i; lessonSeenSlides.add(i); renderLessonScreen(); });
+    dots.appendChild(d);
+  });
+  body.appendChild(dots);
+
+  const card = document.createElement('div');
+  card.className = 'lesson-slide t-card';
+  card.innerHTML = `
+    <div class="lesson-slide-num">Slide ${lessonSlideIdx + 1} of ${les.slides.length}</div>
+    <div class="lesson-slide-title">${slide.heading}</div>
+    <div class="lesson-slide-body">${slide.body || ''}</div>`;
+  body.appendChild(card);
+
+  const nav = document.createElement('div');
+  nav.className = 'lesson-nav';
+  const isFirst = lessonSlideIdx === 0;
+  const isLast  = lessonSlideIdx === les.slides.length - 1;
+  nav.innerHTML = `
+    <button class="btn ghost" style="flex:1;" ${isFirst ? 'disabled' : ''} id="lPrevBtn">← Back</button>
+    <button class="btn" style="flex:1;" id="lNextBtn">${isLast ? '🧩 Try Examples →' : 'Next →'}</button>`;
+  body.appendChild(nav);
+  nav.querySelector('#lPrevBtn').addEventListener('click', () => {
+    if (lessonSlideIdx > 0) { lessonSlideIdx--; lessonSeenSlides.add(lessonSlideIdx); renderLessonScreen(); }
+  });
+  nav.querySelector('#lNextBtn').addEventListener('click', () => {
+    if (isLast) { lessonSection = 'examples'; lessonExIdx = 0; lessonStepsShown = 0; lessonSeenSlides = new Set([0]); renderLessonScreen(); }
+    else { lessonSlideIdx++; lessonSeenSlides.add(lessonSlideIdx); renderLessonScreen(); }
+  });
+}
+
+function renderLessonExample(body, les) {
+  const ex = les.examples[lessonExIdx];
+  const dots = document.createElement('div');
+  dots.className = 'lesson-dots';
+  les.examples.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'lesson-dot' + (i === lessonExIdx ? ' active' : lessonSeenSlides.has(i) ? ' seen' : '');
+    d.addEventListener('click', () => { lessonExIdx = i; lessonStepsShown = 0; lessonSeenSlides.add(i); renderLessonScreen(); });
+    dots.appendChild(d);
+  });
+  body.appendChild(dots);
+
+  const card = document.createElement('div');
+  card.className = 't-card example-card';
+  card.innerHTML = `
+    <div class="example-num">Example ${lessonExIdx + 1} of ${les.examples.length}</div>
+    <div class="example-q">${ex.q}</div>
+    <div class="example-steps" id="exStepsWrap"></div>
+    <div class="example-answer" id="exAnswer">✅ ${ex.answer}</div>`;
+  body.appendChild(card);
+
+  const stepsWrap = card.querySelector('#exStepsWrap');
+  (ex.steps || []).forEach((s, i) => {
+    const step = document.createElement('div');
+    step.className = 'example-step' + (i < lessonStepsShown ? ' revealed' : '');
+    step.innerHTML = `<div class="example-step-num">${i + 1}</div><div>${s}</div>`;
+    stepsWrap.appendChild(step);
+  });
+  if (lessonStepsShown >= (ex.steps || []).length) {
+    card.querySelector('#exAnswer').classList.add('revealed');
+  }
+
+  const btnRow = document.createElement('div');
+  btnRow.className = 'example-btn-row';
+  const allRevealed = lessonStepsShown >= (ex.steps || []).length;
+  const isLastEx    = lessonExIdx >= les.examples.length - 1;
+  btnRow.innerHTML = `
+    <button class="btn ghost example-reveal-btn" id="exRevealBtn" ${allRevealed ? 'disabled style="opacity:.5"' : ''}>${allRevealed ? '✓ All steps shown' : 'Reveal Step ' + (lessonStepsShown + 1) + ' ▶'}</button>
+    <button class="btn example-next-btn" id="exNextBtn" style="${allRevealed ? '' : 'display:none'}">${isLastEx ? '🎯 Start Quiz →' : 'Next Example →'}</button>`;
+  body.appendChild(btnRow);
+
+  btnRow.querySelector('#exRevealBtn').addEventListener('click', () => {
+    lessonStepsShown++;
+    const steps = card.querySelectorAll('.example-step');
+    if (steps[lessonStepsShown - 1]) steps[lessonStepsShown - 1].classList.add('revealed');
+    if (lessonStepsShown >= (ex.steps || []).length) {
+      card.querySelector('#exAnswer').classList.add('revealed');
+      const rb = btnRow.querySelector('#exRevealBtn');
+      if (rb) { rb.disabled = true; rb.style.opacity = '0.5'; rb.textContent = '✓ All steps shown'; }
+      const nb = btnRow.querySelector('#exNextBtn');
+      if (nb) nb.style.display = '';
+    } else {
+      const rb = btnRow.querySelector('#exRevealBtn');
+      if (rb) rb.textContent = 'Reveal Step ' + (lessonStepsShown + 1) + ' ▶';
+    }
+  });
+
+  btnRow.querySelector('#exNextBtn').addEventListener('click', () => {
+    if (isLastEx) { showScreen('homeScreen'); startUnit(lessonUnitIdx); }
+    else { lessonExIdx++; lessonStepsShown = 0; lessonSeenSlides.add(lessonExIdx); renderLessonScreen(); }
+  });
+
+  const backRow = document.createElement('div');
+  backRow.style.cssText = 'text-align:center;margin-top:4px;';
+  const les_len = les.slides.length - 1;
+  backRow.innerHTML = `<button class="btn ghost" style="font-size:12px;padding:8px 16px;" id="backToLesson">← Back to Lesson</button>`;
+  body.appendChild(backRow);
+  backRow.querySelector('#backToLesson').addEventListener('click', () => {
+    lessonSection = 'lesson'; lessonSlideIdx = les_len; renderLessonScreen();
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   $('lessonCloseBtn')?.addEventListener('click', () => { renderHome(); showScreen('homeScreen'); });
@@ -5713,9 +6403,11 @@ function confirmReset() {
   completedUnits = new Set(); unitProgress = {}; unitAccHistory = {};
   mistakeJournal = []; confidenceData = {}; bookmarks = new Set();
   currentDifficulty = 'beginner'; dailyQuestionsAnswered = 0;
+  streakFreezes = 1; lastPlayDate = null;
   srSchedule = {}; saveSRSchedule(); saveDailyProgress();
   try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
-  // Also clear per-student save key
+  try { localStorage.removeItem('inc_streak_freezes'); } catch(e) {}
+  try { localStorage.removeItem('inc_last_play_date'); } catch(e) {}
   if (studentName) {
     try { localStorage.removeItem(getStudentSaveKey(studentName)); } catch(e) {}
   }
@@ -5723,6 +6415,9 @@ function confirmReset() {
   renderHome();
   showScreen('homeScreen');
   updateGoalBar();
+  updateDueBadge();
+  const fb = $('freezeBadge');
+  if (fb) fb.textContent = '❄️ 1';
   showToast('Progress reset. Starting fresh! 🔄', 'info');
   updateBmBadge(); updateMjBadge();
   document.querySelectorAll('.diff-btn').forEach(b => b.classList.toggle('active', b.dataset.d === 'beginner'));
@@ -5817,8 +6512,8 @@ checkAnswer = function() {
 
 // ══ TEACHER REPORT ══════════════════════════════
 function openTeacherReport() {
-  renderTeacherReport();
-  showScreen('reportScreen');
+  // Delegate to new report modal (CD-style)
+  openReportModal();
 }
 
 function renderTeacherReport() {
@@ -5877,18 +6572,308 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ══ WIRE ALL NEW BUTTONS ════════════════════════
+// ════════════════════════════════════════════════
+//  TEACHER MODE
+// ════════════════════════════════════════════════
+const TEACHER_PIN = '1234';
+let teacherUnlocked = false;
+
+function openTeacherModal() {
+  const modal = $('teacherModal');
+  if (!modal) return;
+  $('teacherPinInput').value = '';
+  $('teacherPinError').textContent = '';
+  if (teacherUnlocked) { showTeacherControls(); }
+  else { $('teacherUnlocked').classList.remove('visible'); }
+  modal.classList.add('open');
+  if (!teacherUnlocked) setTimeout(() => $('teacherPinInput').focus(), 80);
+}
+
+function closeTeacherModal() {
+  const modal = $('teacherModal');
+  if (modal) modal.classList.remove('open');
+  renderHome();
+}
+
+function checkTeacherPin() {
+  const val = ($('teacherPinInput').value || '').trim();
+  if (val === TEACHER_PIN) {
+    teacherUnlocked = true;
+    $('teacherPinError').textContent = '';
+    showTeacherControls();
+  } else {
+    $('teacherPinError').textContent = 'Incorrect PIN. Try again.';
+    $('teacherPinInput').value = '';
+    $('teacherPinInput').focus();
+  }
+}
+
+function showTeacherControls() {
+  $('teacherUnlocked').classList.add('visible');
+  renderTeacherToggles();
+}
+
+function renderTeacherToggles() {
+  const wrap = $('teacherUnitToggles');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const isDone = completedUnits.has(i);
+    const row = document.createElement('div');
+    row.className = 'teacher-unit-row' + (isDone ? ' completed' : '');
+    row.id = 'teacher-row-' + i;
+    row.innerHTML = `
+      <div class="teacher-unit-icon">${u.icon}</div>
+      <div class="teacher-unit-name">Unit ${i+1}: ${u.name}</div>
+      <div class="teacher-unit-status${isDone ? ' done' : ''}" id="teacher-status-${i}">${isDone ? '✓ Done' : 'In Progress'}</div>
+      <label class="t-toggle">
+        <input type="checkbox" id="teacher-toggle-${i}" ${isDone ? 'checked' : ''} onchange="teacherToggleUnit(${i}, this.checked)"/>
+        <span class="t-slider"></span>
+      </label>`;
+    wrap.appendChild(row);
+  });
+}
+
+function teacherToggleUnit(idx, on) {
+  if (on) {
+    completedUnits.add(idx);
+    unitProgress[idx] = 1;
+    unlockedUnits = Math.max(unlockedUnits, idx + 2);
+  } else {
+    completedUnits.delete(idx);
+    unitProgress[idx] = 0;
+    let maxUnlocked = 1;
+    completedUnits.forEach(id => { maxUnlocked = Math.max(maxUnlocked, id + 2); });
+    unlockedUnits = Math.max(1, maxUnlocked);
+  }
+  const row    = $('teacher-row-' + idx);
+  const status = $('teacher-status-' + idx);
+  if (row)    { row.classList.toggle('completed', on); }
+  if (status) { status.textContent = on ? '✓ Done' : 'In Progress'; status.className = 'teacher-unit-status' + (on ? ' done' : ''); }
+  autoSave();
+}
+
+function teacherCompleteAll() {
+  UNITS.forEach((_, i) => { completedUnits.add(i); unitProgress[i] = 1; });
+  unlockedUnits = UNITS.length;
+  autoSave(); renderTeacherToggles();
+}
+
+function teacherResetAll() {
+  completedUnits = new Set(); unitProgress = {}; unlockedUnits = 1;
+  autoSave(); renderTeacherToggles();
+}
+
+// ════════════════════════════════════════════════
+//  REPORT MODAL
+// ════════════════════════════════════════════════
+function openReportModal() {
+  const modal = $('reportModal');
+  if (!modal) return;
+  const totalAcc = Object.values(unitAccHistory).reduce((s,v) => ({ correct: s.correct+v.correct, total: s.total+v.total }), { correct:0, total:0 });
+  const accPct = totalAcc.total > 0 ? Math.round(totalAcc.correct / totalAcc.total * 100) : 0;
+  const dateStr = new Date().toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'});
+
+  $('reportSubtitle').textContent = (studentName ? studentName + ' · ' : '') + 'Generated ' + dateStr;
+
+  $('reportSummaryRows').innerHTML = [
+    ['Student',           studentName || '(not set)'],
+    ['Total XP',          totalXP + ' XP'],
+    ['Streak',            globalStreak + ' day' + (globalStreak !== 1 ? 's' : '')],
+    ['Units Completed',   completedUnits.size + ' / ' + UNITS.length],
+    ['Overall Accuracy',  accPct + '%'],
+  ].map(([k,v]) => `<div class="report-summary-row"><span>${k}</span><span>${v}</span></div>`).join('');
+
+  $('reportTableBody').innerHTML = UNITS.map((u, i) => {
+    const hist = unitAccHistory[i];
+    const pct  = hist && hist.total > 0 ? Math.round(hist.correct / hist.total * 100) + '%' : '—';
+    const prog = Math.round((unitProgress[i] || 0) * 100) + '%';
+    const done = completedUnits.has(i);
+    const locked = i >= unlockedUnits;
+    const status = done   ? '<span class="report-badge done">✓ Done</span>'
+                 : locked ? '<span class="report-badge lock">Locked</span>'
+                 :          '<span class="report-badge prog">In Progress</span>';
+    return `<tr><td>${u.icon} Unit ${i+1}: ${u.name}</td><td>${status}</td><td>${pct}</td><td>${prog}</td></tr>`;
+  }).join('');
+
+  const savedEmail = (() => { try { return localStorage.getItem('inc_teacher_email') || ''; } catch(e) { return ''; } })();
+  const emailInput = $('teacherEmailInput');
+  if (emailInput) emailInput.value = savedEmail;
+  const errEl = $('emailError');
+  if (errEl) errEl.textContent = '';
+
+  modal.classList.add('open');
+}
+
+function closeReportModal() {
+  const modal = $('reportModal');
+  if (modal) modal.classList.remove('open');
+}
+
+function buildReportText() {
+  const totalAcc = Object.values(unitAccHistory).reduce((s,v) => ({ correct:s.correct+v.correct, total:s.total+v.total }), { correct:0, total:0 });
+  const accPct = totalAcc.total > 0 ? Math.round(totalAcc.correct / totalAcc.total * 100) : 0;
+  const date = new Date().toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'});
+  const lines = [
+    '================================================',
+    '  INCODENITO — STUDENT PROGRESS REPORT',
+    '================================================',
+    '',
+    'Student:          ' + (studentName || '(not set)'),
+    'Date:             ' + date,
+    'Total XP:         ' + totalXP,
+    'Day Streak:       ' + globalStreak,
+    'Units Completed:  ' + completedUnits.size + ' / ' + UNITS.length,
+    'Overall Accuracy: ' + accPct + '%',
+    '',
+    '------------------------------------------------',
+    '  UNIT BREAKDOWN',
+    '------------------------------------------------',
+    '',
+    ('Unit').padEnd(36) + ('Status').padEnd(14) + ('Accuracy').padEnd(12) + 'Progress',
+    '-'.repeat(72),
+  ];
+  UNITS.forEach((u, i) => {
+    const hist = unitAccHistory[i];
+    const pct  = hist && hist.total > 0 ? Math.round(hist.correct / hist.total * 100) + '%' : '—';
+    const prog = Math.round((unitProgress[i] || 0) * 100) + '%';
+    const done = completedUnits.has(i);
+    const locked = i >= unlockedUnits;
+    const status = done ? 'Completed' : locked ? 'Locked' : 'In Progress';
+    lines.push(('Unit ' + (i+1) + ': ' + u.name).padEnd(36) + status.padEnd(14) + pct.padEnd(12) + prog);
+  });
+  lines.push('', '================================================', '  Generated by Incodenito', '================================================');
+  return lines.join('\n');
+}
+
+function sendReportEmail() {
+  const emailInput = $('teacherEmailInput');
+  const errEl = $('emailError');
+  const email = (emailInput ? emailInput.value : '').trim();
+  if (!email) { if (errEl) errEl.textContent = "Please enter your teacher's email."; if (emailInput) emailInput.focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { if (errEl) errEl.textContent = "That doesn't look like a valid email."; if (emailInput) emailInput.focus(); return; }
+  if (errEl) errEl.textContent = '';
+  try { localStorage.setItem('inc_teacher_email', email); } catch(e) {}
+  const date = new Date().toISOString().slice(0,10);
+  const subject = encodeURIComponent('Incodenito Progress Report — ' + (studentName || 'Student') + ' — ' + date);
+  const body = encodeURIComponent(buildReportText());
+  window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + subject + '&body=' + body;
+}
+
+function downloadReport() {
+  const text = buildReportText();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = 'incodenito_report_' + (studentName||'student').replace(/\s+/g,'_').toLowerCase() + '_' + new Date().toISOString().slice(0,10) + '.txt';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ════════════════════════════════════════════════
+//  SAVE POPUP
+// ════════════════════════════════════════════════
+function showSavePopup(unitName, passed) {
+  const overlay = $('savePopupOverlay');
+  if (!overlay) return;
+  $('savePopupIcon').textContent  = passed ? '🎉' : '💪';
+  $('savePopupTitle').textContent = passed ? 'Unit Complete!' : 'Session Done!';
+  $('savePopupSub').textContent   = passed
+    ? `You completed ${unitName}! Save now so your progress is safe.`
+    : `Good effort on ${unitName}. Save your progress before you go!`;
+  overlay.classList.add('open');
+}
+
+function closeSavePopup() {
+  const overlay = $('savePopupOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function saveFromPopup() {
+  autoSave();
+  closeSavePopup();
+  showToast('Progress saved! ✅', 'success', 2000);
+}
+
+// ════════════════════════════════════════════════
+//  SR DUE BADGE & REVIEW SESSION
+// ════════════════════════════════════════════════
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+function getDueReviews() {
+  const today = todayStr();
+  const due = [];
+  UNITS.forEach((u, uIdx) => {
+    u.questions.forEach(q => {
+      const k = `sr::${uIdx}::${(q.t||'').slice(0,50)}`;
+      const rec = srSchedule[k];
+      if (rec && rec.dueDate && rec.dueDate <= today) {
+        due.push({ q: {...q, _unitIdx: uIdx}, rec });
+      }
+    });
+  });
+  return due;
+}
+
+function getDueCount() { return getDueReviews().length; }
+
+function updateDueBadge() {
+  const n = getDueCount();
+  const badge = $('srDueBadge');
+  const btn   = $('srDueBtn');
+  if (badge) badge.textContent = n;
+  if (btn)   btn.style.display = n > 0 ? 'inline-flex' : 'none';
+}
+
+let reviewQs = [], reviewIdx = 0;
+function openReviewSession() {
+  const due = getDueReviews();
+  if (due.length === 0) { showToast("🎉 No reviews due — you're all caught up!", 'success'); return; }
+  reviewQs = due.map(d => d.q);
+  shuffleArr(reviewQs);
+  curUnit = null; sesQs = reviewQs;
+  curQ = 0; hearts = 5; sesXP = 0; sesScore = 0; sesCorrect = 0;
+  answered = false; hintUsed = false;
+  srMode = false; srQueue = [];
+  $('unitChip').textContent = '🔄 Spaced Review';
+  $('qTot').textContent = reviewQs.length;
+  $('sesXP').textContent = 0;
+  renderHearts();
+  loadQ();
+  showScreen('gameScreen');
+}
+
 function initNewFeatures() {
   loadDailyGoal();
   updateGoalBar();
   initLoginScreen();
   updateProfileUI();
+  updateDueBadge();
 
+  // Wire home nav buttons
   $('examBtn')?.addEventListener('click', openExamSimulator);
   $('lessonBtn')?.addEventListener('click', () => openLessonPath());
-  $('reportBtn')?.addEventListener('click', openTeacherReport);
+  $('reportBtn')?.addEventListener('click', openReportModal);
   $('resetBtn')?.addEventListener('click', openResetModal);
+  $('mjHomeBtn')?.addEventListener('click', openMistakeJournal);
 
-  // Timer toggle in home (add a small toggle pill)
+  // Wire modal backdrop close
+  $('teacherModal')?.addEventListener('click', function(e) { if (e.target === this) closeTeacherModal(); });
+  $('reportModal')?.addEventListener('click',  function(e) { if (e.target === this) closeReportModal(); });
+  $('savePopupOverlay')?.addEventListener('click', function(e) { if (e.target === this) closeSavePopup(); });
+
+  // Wire teacher PIN enter key
+  $('teacherPinInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkTeacherPin(); });
+
+  // Init onboarding dots
+  showOnboardDots();
+
+  // Freeze badge init
+  const fb = $('freezeBadge');
+  if (fb && typeof streakFreezes !== 'undefined') fb.textContent = '❄️ ' + streakFreezes;
+
+  // Timer toggle in home
   const diffSel = document.querySelector('.diff-selector');
   if (diffSel && !$('timerToggleWrap')) {
     const wrap = document.createElement('div');
@@ -5901,12 +6886,6 @@ function initNewFeatures() {
       </div>
       <span id="timerToggleLabel" style="font-family:var(--mono);font-size:10px;color:var(--muted);">OFF</span>`;
     diffSel.after(wrap);
-  }
-
-  // SR due count badge
-  const dueCount = getDueSRCount();
-  if (dueCount > 0) {
-    showToast(`📅 ${dueCount} review${dueCount>1?'s':''} due for spaced repetition!`, 'info', 4000);
   }
 }
 
@@ -6028,6 +7007,7 @@ const _origShowBackupToast = showBackupToast;
         <div style="font-size:var(--t-2xl);font-weight:800;color:var(--text);margin-bottom:6px;" id="examResTitle">EXAM COMPLETE</div>
         <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:20px;" id="examResSub"></div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;" id="examResStats"></div>
+        <div id="examUnitScores" style="margin-bottom:20px;"></div>
         <button class="btn" onclick="renderHome();showScreen('homeScreen');" style="width:100%;">← Home</button>
       </div>
     </div>
@@ -6038,9 +7018,12 @@ const _origShowBackupToast = showBackupToast;
 <div class="screen" id="lessonScreen">
   <div class="lesson-topbar">
     <button class="close-btn" id="lessonCloseBtn">✕</button>
-    <div class="lesson-title" id="lessonTopTitle">📖 Lesson <span>Path</span></div>
-    <span style="font-family:var(--mono);font-size:10px;color:var(--muted);" id="lessonCounter">1 / 1</span>
+    <div style="flex:1;min-width:0;">
+      <div class="lesson-title" id="lessonTopTitle">📖 Lesson <span>Path</span></div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px;" id="lessonTopSub">Choose a unit</div>
+    </div>
   </div>
+  <div class="lesson-progress-bar"><div class="lesson-progress-fill" id="lessonProgressFill" style="width:0%"></div></div>
   <div class="lesson-body" id="lessonBody"></div>
 </div>
 
