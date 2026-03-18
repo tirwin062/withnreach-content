@@ -6975,10 +6975,14 @@ function teacherCompleteAll() {
 }
 
 function teacherResetAll() {
-  completedUnits = new Set();
-  unitProgress   = {};
-  unlockedUnits  = 1;
+  resetState();
+  try { localStorage.removeItem(currentSaveKey()); } catch(e) {}
   saveState();
+  updateDailyGoalUI();
+  updateDueBadge();
+  updateMjBadge();
+  updateBmBadge();
+  renderHome();
   renderTeacherToggles();
 }
 
