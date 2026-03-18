@@ -4925,6 +4925,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedActive = localStorage.getItem(ACTIVE_KEY);
   if (savedActive) {
     studentName = savedActive;
+    resetState();    // clear any defaults before loading saved data
     loadState();
     updateDailyGoalUI();
     updateDueBadge();
@@ -5785,7 +5786,8 @@ function activateStudent(name) {
   studentName = name;
   localStorage.setItem(ACTIVE_KEY, name);
   addProfile(name);
-  loadState();
+  resetState();    // always start clean before loading saved data
+  loadState();     // overlay with whatever this student has saved
   updateDailyGoalUI();
   updateDueBadge();
   updateMjBadge();
@@ -6052,10 +6054,7 @@ function closeResetModal() {
   const m = $('resetModal');
   if (m) m.style.display = 'none';
 }
-function confirmReset() {
-  closeResetModal();
-  try { localStorage.removeItem(currentSaveKey()); } catch(e) {}
-  // Reset all in-memory state without page reload
+function resetState() {
   totalXP = 0; globalStreak = 0; unlockedUnits = 1;
   _celebratedMilestones = new Set();
   completedUnits = new Set(); unitProgress = {}; unitAccHistory = {};
@@ -6065,6 +6064,12 @@ function confirmReset() {
   timedMode = false;
   const tog = $('timedToggle');
   if (tog) tog.classList.remove('on');
+}
+
+function confirmReset() {
+  closeResetModal();
+  try { localStorage.removeItem(currentSaveKey()); } catch(e) {}
+  resetState();
   // Clear onboarding flag so walkthrough shows again
   try { localStorage.removeItem(ONBOARD_KEY); } catch(e) {}
   updateDailyGoalUI();
